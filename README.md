@@ -1,8 +1,8 @@
-# f23wb95appalashetty
+# s23db95appalashetty
 
 ## Accessing the Deployed Server
 
-[My Render Server](https://f23wb95appalashetty.onrender.com)
+[My Render Server](https://s23db95appalashetty.onrender.com)
 
 ### Class: Brand
 
