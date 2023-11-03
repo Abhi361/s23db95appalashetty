@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to my website.
+  button(type="button" class="btn btn-secondary" onclick="goFaster()") Press Me
+  br
+  br
+  div#faster Increase the Speed
+  script.
+    mph = 20;
+    change = 1;
+    function goFaster(){
+      mph += change;
+      change += 1;
+      document.getElementById("faster").innerHTML = "MPH " + mph + " Change " + change;
+    }
+  a(href="/eagle") Go to Search Results
