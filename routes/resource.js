@@ -18,3 +18,4 @@ router.get('/eagles/:id', eagle_controller.eagle_detail);
 // GET request for list of all eagle items.
 router.get('/eagles', eagle_controller.eagle_list);
 module.exports=router;
+

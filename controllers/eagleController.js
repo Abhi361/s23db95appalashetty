@@ -58,25 +58,25 @@ exports.eagle_update_put = function (req, res) {
     res.send('NOT IMPLEMENTED: eagle update PUT' + req.params.id);
 };
 
-// Handle Eagle detail on GET.
+// Handle eagle detail on GET.
 exports.eagle_detail = async function (req, res) {
     console.log("detail" + req.params.id)
     try {
-        const Eagle = await eagle.findById(req.params.id);
-        if (Eagle == null) {
+        const foundeagle = await eagle.findById(req.params.id);
+        if (foundeagle == null) {
             res.status(404);
-            res.send({"error": "Eagle not found"});
+            res.send({ "error": "eagle not found" });
         } else {
-            res.send(Eagle);
+            res.send(foundeagle);
         }
     } catch (err) {
         res.status(500);
-        res.send(`{"error": ${err}}`);
-    }
+        res.send('{"error": ${err}}');
+    }
 };
 
 // Handle eagle update form on PUT.
-exports.eagle_update_put = async function(req, res) {
+exports.eagle_update_put = async function (req, res) {
     console.log(`Update on id ${req.params.id} with body ${JSON.stringify(req.body)}`);
     try {
         let toUpdate = await eagle.findById(req.params.id);
@@ -109,5 +109,84 @@ exports.eagle_update_put = async function(req, res) {
         res.send(result);
     } catch (err) {
         res.status(500).send(`{"error": ${err}: Update for id ${req.params.id} failed`);
-    }
+    }
+};
+
+
+// Handle Eagle delete on DELETE.
+exports.eagle_delete = async function (req, res) {
+    console.log("delete " + req.params.id)
+    try {
+        result = await eagle.findByIdAndDelete(req.params.id)
+        console.log("Removed " + result)
+        res.send(result)
+    } catch (err) {
+        res.status(500)
+        res.send(`{"error": Error deleting ${err}}`);
+    }
+};
+
+
+// Handle a show one view with id specified by query
+exports.eagle_view_one_Page = async function (req, res) {
+    console.log("single view for id " + req.query.id)
+    try {
+        result = await eagle.findById(req.query.id)
+        res.render('eagledetail',
+            { title: 'Eagle Detail', toShow: result });
+    }
+    catch (err) {
+        res.status(500)
+        res.send({ 'error': '${err}' });
+    }
+};
+
+// Handle building the view for creating a brand.
+// No body, no in path parameter, no query.
+// Does not need to be async
+exports.eagle_create_Page = function (req, res) {
+    console.log("create view")
+    try {
+        res.render('eaglecreate', { title: 'Eagle Create' });
+    }
+    catch (err) {
+        res.status(500)
+        res.send({ 'error': '${err}' });
+    }
+};
+
+// Handle building the view for updating an animal.
+// query provides the id
+exports.eagle_update_Page = async function (req, res) {
+    console.log("update view for item " + req.query.id)
+    try {
+        const result = await eagle.findById(req.query.id)
+        if (!result) {
+            res.status(404)
+            res.send('Eagle not found');
+            return;
+        }
+        res.render('eagleupdate', { title: 'Eagle Update', toShow: result });
+    }
+    catch (err) {
+        res.status(500)
+        res.send({'error': '${err}'});
+    }
+};
+
+
+// Handle a delete one view with id from query
+exports.eagle_delete_Page = async function (req, res) {
+    console.log("Delete view for id " + req.query.id)
+    try {
+        result = await eagle.findById(req.query.id)
+        res.render('Eagledelete', {
+            title: 'Eagle Delete', toShow:
+                result
+        });
+    }
+    catch (err) {
+        res.status(500)
+        res.send({ 'error': '${err}' });
+    }
 };

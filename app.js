@@ -27,7 +27,7 @@ db.once("open", function() { console.log("Connection to DB succeeded"); });
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var eagleRouter = require('./routes/eagle');
+var eaglesRouter = require('./routes/eagles');
 var boardRouter = require('./routes/board');
 var chooseRouter = require('./routes/choose');
 
@@ -84,7 +84,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/eagle', eagleRouter);
+app.use('/eagle', eaglesRouter);
 app.use('/board', boardRouter);
 app.use('/choose', chooseRouter);
 

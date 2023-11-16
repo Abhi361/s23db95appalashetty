@@ -1,0 +1,20 @@
+extends layout
+block content
+ h1= title
+ - let eagleid = toShow._id
+ - let name = toShow.name
+ - let age = toShow.age
+ - let description = toShow.description
+ div
+ div.row
+ div(class='eagleAttr mr-3') Eagle ID is:
+ div #{eagleid}
+ div.row
+ div(class='eagleAttr mr-3') Eagle Name is:
+ div #{name}
+ div.row
+ div(class='eagleAttr mr-3') Eagle Age is:
+ div #{age}
+ div.row
+ div(class='eagleAttr mr-3') Eagle Description is:
+ div #{description}

@@ -1,0 +1,47 @@
+extends layout
+
+block content
+  h1= title
+  -
+    let eagleid = toShow._id
+  -
+    let name = toShow.name
+  -
+    let age = toShow.age
+  -
+    let description = toShow.description
+  div.row(class='mb-2')
+    div.mr-1 ID is
+    div #{eagleid}
+  -
+    let actionid = "/resource/eagles/" + eagleid
+  form(id='eagleForm', action= actionid, method="PUT")
+    div.form-group
+      label.eagleAttr(for='name') Eagle Name 
+      input.outlined-input(type='text', name='name', value= name )
+    div.form-group
+      label.eagleAttr(for='age') Eagle Age
+      input.outlined-input(type='number', name='age', value= age)
+    div.form-group
+      label.eagleAttr(for='description') Eagle Description
+      input.outlined-input(type='text', step='any', name='description', value= description )
+    input(type="submit")
+
+    script.
+      document.forms['eagleForm'].addEventListener('submit', (event) => {
+        event.preventDefault();
+        // TODO do something here to show user that form is being submitted
+        fetch(event.target.action, {
+          method: 'PUT',
+          body: new URLSearchParams(new FormData(event.target))
+        }).then((resp) => {
+          if (resp.ok) {
+            alert('Eagle updated successfully');
+            document.getElementById("eagleForm").reset();
+          } else {
+            alert("Failed to update eagle");
+          }
+        }).catch((error) => {
+          alert("Update failed " + error);
+        });
+      });
