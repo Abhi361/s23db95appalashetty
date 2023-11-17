@@ -55,6 +55,8 @@ var chooseRouter = require('./routes/choose');
 
 var eagle = require("./models/eagle");
 
+var Account =require('./models/account');
+
 async function recreateDB() {
   await eagle.deleteMany();
  
@@ -132,5 +134,13 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// passport config
+// Use the existing connection
+// The Account model
+
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser())
 
 module.exports = app;
