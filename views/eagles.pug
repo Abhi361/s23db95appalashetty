@@ -1,6 +1,18 @@
-each item in theeagles
-  div
-    p name - #{item.name}
-    p age - #{item.age}
-    p description - #{item.description}
-    br
+extends layout
+
+block content
+  h1= title
+  - let items = results;
+  each item in items
+    - let destination = `/eagles/update?id=${item._id}` 
+    div
+      p name - #{item.name}
+      p age - #{item.age}
+      p description - #{item.description}
+      button.btn(class="btn-primary ml-1", onclick=`dispatch('${destination}')`) Update 
+      br
+      br
+  script.
+    function dispatch(path){
+      window.location.href = path;
+    }
